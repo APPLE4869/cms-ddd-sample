@@ -18,5 +18,11 @@ class Content(
         var status: Status,
         var fieldList: FieldList
 ) {
+    fun changeFieldList(newFieldList: FieldList) {
+        this.fieldList = newFieldList
+    }
 
+    fun changeStatus(newStatus: Status) {
+        this.status = newStatus
+    }
 }

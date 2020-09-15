@@ -1,6 +1,7 @@
 package com.dddsample.demo.domain.content
 
 import com.dddsample.demo.domain.contentFormat.ContentFormatId
+import com.dddsample.demo.domain.website.WebsiteId
 
 /**
  * オブジェクト種別
@@ -10,6 +11,8 @@ import com.dddsample.demo.domain.contentFormat.ContentFormatId
  * コンテンツ用リポジトリ
  */
 interface ContentRepository {
+    fun nextIdentifier(): ContentId
+
     fun retrieveAllByContentFormatId(id: ContentFormatId): List<Content>
 
     fun retrieveById(id: ContentId): Content?
