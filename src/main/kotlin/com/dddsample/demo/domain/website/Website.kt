@@ -64,5 +64,5 @@ class Website(
         }.toSet()
     }
 
-    private fun isMember(userAccountId: UserAccountId): Boolean = memberList.any { it.userAccountId == userAccountId }
+    fun isMember(userAccountId: UserAccountId): Boolean = memberList.any { it.userAccountId == userAccountId }
 }
