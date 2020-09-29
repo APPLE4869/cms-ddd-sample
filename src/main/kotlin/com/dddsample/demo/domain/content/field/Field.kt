@@ -10,7 +10,7 @@ import com.dddsample.demo.domain.contentFormat.fieldFormat.FieldIdentifier
  * フィールド
  */
 data class Field(
-        val filedIdentifier: FieldIdentifier,
+        val fieledIdentifier: FieldIdentifier,
         val value: FieldValue
 ) {
 

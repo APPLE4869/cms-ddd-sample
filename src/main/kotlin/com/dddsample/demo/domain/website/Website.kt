@@ -19,6 +19,9 @@ class Website(
     var memberList: Set<Member>
 ) {
     companion object {
+        const val MAX_MEMBER_LIMIT = 30
+        const val MIN_MEMBER_LIMIT = 1
+
         fun create(
             id: WebsiteId,
             slug: Slug,
@@ -45,9 +48,9 @@ class Website(
     fun addMember(
         userAccountId: UserAccountId
     ) {
-        val newMember = Member.createNewMember(userAccountId = userAccountId)
+        require(!this.isMember(userAccountId) && this.isWithinMemberLimit())
 
-        require(!this.isMember(userAccountId))
+        val newMember = Member.createNewMember(userAccountId = userAccountId)
 
         this.memberList = memberList.plus(newMember)
     }
@@ -61,7 +64,7 @@ class Website(
     }
 
     fun canRemoveMember(): Boolean {
-        return this.memberList.size >= 2
+        return this.memberList.size >= MIN_MEMBER_LIMIT + 1
     }
 
     fun changeMemberRole(
@@ -79,4 +82,15 @@ class Website(
     }
 
     fun isMember(userAccountId: UserAccountId): Boolean = memberList.any { it.userAccountId == userAccountId }
+
+    fun isWithinMemberLimit(): Boolean =
+        memberList.size in MAX_MEMBER_LIMIT..MIN_MEMBER_LIMIT
+
+    init {
+        validateFields()
+    }
+
+    private fun validateFields() {
+        require(this.isWithinMemberLimit())
+    }
 }

@@ -14,6 +14,8 @@ data class Member(
     val role: Role
 ) {
     companion object {
+        const val MAX_NUMBER = 30
+
         fun createNewMember(
             userAccountId: UserAccountId) =
             Member(userAccountId = userAccountId, role = Role.EDITOR)

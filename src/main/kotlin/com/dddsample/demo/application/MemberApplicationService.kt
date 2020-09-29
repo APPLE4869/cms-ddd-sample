@@ -15,9 +15,10 @@ class MemberApplicationService(
         websiteId: WebsiteId
     ) {
         val targetWebsite = websiteRepository.retrieveById(websiteId) ?:throw IllegalStateException()
-        if (targetWebsite.isMember(userAccountId)) {
+        if (targetWebsite.isMember(userAccountId) || !targetWebsite.isWithinMemberLimit()) {
             throw IllegalStateException()
         }
+
         targetWebsite.addMember(userAccountId)
         websiteRepository.store(targetWebsite)
     }
