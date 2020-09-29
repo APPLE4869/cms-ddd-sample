@@ -12,5 +12,4 @@ data class FieldFormat(
         val name: FieldName,
         val type: FieldFormatType
 ) {
-
 }

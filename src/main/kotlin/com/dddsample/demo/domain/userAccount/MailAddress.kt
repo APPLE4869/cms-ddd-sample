@@ -10,12 +10,16 @@ package com.dddsample.demo.domain.userAccount
 data class MailAddress(var value: String) {
     companion object {
         fun change(newValue: String) = MailAddress(newValue)
+        const val REGEX = "何らかの正規表現"
+        const val MAX_LENGTH = 255
     }
+
     init {
         validate()
     }
 
     fun validate() {
-        TODO()
+        require(REGEX.toRegex().matches(value))
+        require(value.length <= MAX_LENGTH)
     }
 }

@@ -12,48 +12,62 @@ import com.dddsample.demo.domain.website.member.Role
  * ウェブサイト
  */
 class Website(
-        val id: WebsiteId,
-        val slug: Slug,
-        var websiteName: WebsiteName,
-        var iconImage: IconImage,
-        var memberList: Set<Member>
+    val id: WebsiteId,
+    val slug: Slug,
+    var websiteName: WebsiteName,
+    var iconImage: IconImage,
+    var memberList: Set<Member>
 ) {
     companion object {
         fun create(
-                id: WebsiteId,
-                slug: Slug,
-                websiteName: WebsiteName,
-                iconImage: IconImage,
-                userAccountIdOfCreator: UserAccountId
+            id: WebsiteId,
+            slug: Slug,
+            websiteName: WebsiteName,
+            iconImage: IconImage,
+            userAccountIdOfCreator: UserAccountId
         ) = Website(
-                id = id,
-                slug = slug,
-                websiteName = websiteName,
-                iconImage = iconImage,
-                memberList = setOf(Member.createNewMember(userAccountIdOfCreator))
+            id = id,
+            slug = slug,
+            websiteName = websiteName,
+            iconImage = iconImage,
+            memberList = setOf(Member.createNewMember(userAccountIdOfCreator))
         )
     }
 
-    fun changeWebsiteNameAndIconImage(newWebsiteName: WebsiteName, newIconImage: IconImage) {
+    fun changeWebsiteNameAndIconImage(
+        newWebsiteName: WebsiteName,
+        newIconImage: IconImage
+    ) {
         this.websiteName = newWebsiteName
         this.iconImage = newIconImage
     }
 
-    fun addMember(userAccountId: UserAccountId) {
+    fun addMember(
+        userAccountId: UserAccountId
+    ) {
         val newMember = Member.createNewMember(userAccountId = userAccountId)
 
-        if (this.isMember(userAccountId)) { // すでにユーザーがメンバーとして登録されていれば。
-            return
-        }
+        require(!this.isMember(userAccountId))
 
         this.memberList = memberList.plus(newMember)
     }
 
-    fun removeMember(userAccountId: UserAccountId) {
-        this.memberList = memberList.filter { it.userAccountId == userAccountId }.toSet()
+    fun removeMember(
+        userAccountId: UserAccountId
+    ) {
+        require(!this.isMember(userAccountId))
+        require(canRemoveMember())
+        this.memberList = memberList.filter { it.userAccountId != userAccountId }.toSet()
     }
 
-    fun changeMemberRole(userAccountId: UserAccountId, newRole: Role) {
+    fun canRemoveMember(): Boolean {
+        return this.memberList.size >= 2
+    }
+
+    fun changeMemberRole(
+        userAccountId: UserAccountId,
+        newRole: Role
+    ) {
         require(!this.isMember(userAccountId)) // <- 通常引っかかってはいけないエラー。発生したらバグで500が発生する。
 
         this.memberList = memberList.map {
