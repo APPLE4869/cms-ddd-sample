@@ -1,5 +1,6 @@
 package com.dddsample.demo.domain.content.field
 
+import com.dddsample.demo.domain.contentFormat.fieldFormat.FieldFormatType
 import com.dddsample.demo.domain.contentFormat.fieldFormat.FieldIdentifier
 
 /**
@@ -10,8 +11,10 @@ import com.dddsample.demo.domain.contentFormat.fieldFormat.FieldIdentifier
  * フィールド
  */
 data class Field(
-        val fieledIdentifier: FieldIdentifier,
-        val value: FieldValue
+        val fieldIdentifier: FieldIdentifier,
+        private val value: FieldValue
 ) {
-
+    fun checkFormat(type: FieldFormatType): Boolean {
+        return value.matchType(type)
+    }
 }

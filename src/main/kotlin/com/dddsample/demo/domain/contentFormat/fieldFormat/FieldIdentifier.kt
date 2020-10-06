@@ -7,6 +7,6 @@ package com.dddsample.demo.domain.contentFormat.fieldFormat
  * 名称
  * フィールド識別子
  */
-data class FieldIdentifier(val value: String) {
+data class FieldIdentifier(private val value: String) {
 
 }

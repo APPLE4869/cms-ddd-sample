@@ -1,5 +1,7 @@
 package com.dddsample.demo.domain.contentFormat
 
+import com.dddsample.demo.domain.content.field.Field
+import com.dddsample.demo.domain.content.field.FieldList
 import com.dddsample.demo.domain.contentFormat.fieldFormat.FieldFormatList
 import com.dddsample.demo.domain.website.WebsiteId
 
@@ -23,5 +25,17 @@ data class ContentFormat(
 
     fun changeContentFormatName(newContentFormatName: ContentFormatName) {
         this.contentFormatName = newContentFormatName
+    }
+
+    fun checkFieldList(
+            fieldList: FieldList
+    ): Boolean {
+        fieldList.list.all {
+            val format = fieldFormatList.findFormat(it.fieldIdentifier)
+            requireNotNull(format)
+
+            format.sameType(it.type)
+        }
+
     }
 }

@@ -7,6 +7,6 @@ package com.dddsample.demo.domain.contentFormat.fieldFormat
  * 名称
  * フィールド名
  */
-data class FieldName(val value: String) {
+data class FieldName(private val value: String) {
 
 }

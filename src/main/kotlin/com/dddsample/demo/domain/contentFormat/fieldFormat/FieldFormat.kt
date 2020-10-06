@@ -8,8 +8,11 @@ package com.dddsample.demo.domain.contentFormat.fieldFormat
  * フィールド形式
  */
 data class FieldFormat(
-        val fieldIdentifier: FieldIdentifier,
-        val name: FieldName,
-        val type: FieldFormatType
+        private val fieldIdentifier: FieldIdentifier,
+        private val name: FieldName,
+        private val type: FieldFormatType
 ) {
+    fun matchIdentifier(fieldIdentifier: FieldIdentifier): Boolean {
+        TODO()
+    }
 }

@@ -1,5 +1,7 @@
 package com.dddsample.demo.domain.content.field
 
+import com.dddsample.demo.domain.contentFormat.fieldFormat.FieldFormatType
+
 /**
  * オブジェクト種別
  * Value Object
@@ -7,7 +9,8 @@ package com.dddsample.demo.domain.content.field
  * 名称
  * フィールドの値
  */
-data class FieldValue(val value: String) {
+interface FieldValue {
+    val type: FieldFormatType
 
-
+    fun matchType(type: FieldFormatType) = type == this.type
 }
